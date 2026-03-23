@@ -1,0 +1,198 @@
+.login-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: radial-gradient(circle at 15% 10%, rgba(255, 178, 107, 0.22), transparent 45%),
+        radial-gradient(circle at 85% 15%, rgba(102, 212, 255, 0.18), transparent 42%),
+        rgba(8, 10, 16, 0.78);
+    backdrop-filter: blur(10px);
+    animation: loginOverlayFade 240ms ease-out;
+}
+
+.login-popup form {
+    position: relative;
+    width: min(440px, 94vw);
+    background: linear-gradient(160deg, rgba(18, 20, 28, 0.98), rgba(10, 12, 20, 0.98));
+    border-radius: 22px;
+    padding: 28px 26px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6);
+    color: #f7f6ff;
+    display: grid;
+    gap: 16px;
+    font-family: "Sora", "Manrope", sans-serif;
+    animation: loginCardRise 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    overflow: hidden;
+}
+
+.login-popup form::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: radial-gradient(circle at 20% 0%, rgba(255, 196, 140, 0.2), transparent 40%);
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.login-popup form::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 40%);
+    opacity: 0;
+    transform: translateX(-30%);
+    animation: loginSheen 2.6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.login-popup-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.login-popup-title h2 {
+    font-size: 22px;
+    margin: 0;
+    letter-spacing: 0.2px;
+}
+
+.login-popup-title img {
+    width: 28px;
+    height: 28px;
+    padding: 6px;
+    border-radius: 999px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.08);
+    transition: transform 160ms ease, background 160ms ease;
+}
+
+.login-popup-title img:hover {
+    transform: scale(1.08) rotate(6deg);
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.login-popup-inputs {
+    display: grid;
+    gap: 12px;
+}
+
+.login-popup-inputs input {
+    width: 100%;
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(18, 20, 30, 0.92);
+    color: #f9f6ff;
+    font-size: 14px;
+    outline: none;
+    transition: border 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+
+.login-popup-inputs input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.login-popup-inputs input:focus {
+    border-color: rgba(255, 168, 99, 0.7);
+    box-shadow: 0 0 0 3px rgba(255, 168, 99, 0.18);
+    transform: translateY(-1px);
+}
+
+.login-popup button {
+    height: 44px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffc06e, #ff7a59 60%, #ff5f6d);
+    color: #1c0f0a;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+.login-popup button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 26px rgba(255, 122, 89, 0.4);
+    filter: saturate(1.05);
+}
+
+.login-popup-condition {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: start;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.login-popup-condition input {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    accent-color: #ff9a5f;
+}
+
+.login-popup form > p {
+    margin: 0;
+    font-size: 13px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.login-popup form > p span {
+    color: #ffb163;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+@keyframes loginOverlayFade {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes loginCardRise {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes loginSheen {
+    0% {
+        opacity: 0;
+        transform: translateX(-30%);
+    }
+    35% {
+        opacity: 0.45;
+    }
+    70% {
+        opacity: 0;
+        transform: translateX(30%);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(30%);
+    }
+}
+
+@media (max-width: 520px) {
+    .login-popup form {
+        padding: 20px 18px 16px;
+    }
+}
