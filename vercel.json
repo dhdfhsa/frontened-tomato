@@ -1,4 +1,5 @@
 {
+  "name": "frontened-tomato",
   "rewrites": [
     {
       "source": "/(.*)",
