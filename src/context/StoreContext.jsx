@@ -64,8 +64,20 @@ const StoreContextProvider = (props) => {
   };
 
   const fecthFoodList = async()=>{
-    const response = await axios.get(url+"/api/food/list")
-    setFoodList(response.data.data)
+    try {
+      const response = await axios.get(url+"/api/food/list")
+      console.log("API Response from /api/food/list:", response.data);
+      if (response.data.data && response.data.data.length > 0) {
+        console.log("First food item:", {
+          name: response.data.data[0].name,
+          image: response.data.data[0].image,
+          imageType: typeof response.data.data[0].image
+        });
+      }
+      setFoodList(response.data.data)
+    } catch (error) {
+      console.error("Error fetching food list:", error);
+    }
   }
 
  

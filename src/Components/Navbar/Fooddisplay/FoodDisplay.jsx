@@ -14,6 +14,17 @@ const FoodDisplay = ({category, searchQuery}) => {
 
       return matchesCategory && matchesSearch
     })
+
+    // Debug: Log food items with images
+    console.log("FoodDisplay - Total foods:", food_list.length);
+    console.log("FoodDisplay - Filtered foods:", filteredFood.length);
+    if (filteredFood.length > 0) {
+        console.log("Sample food item:", {
+            name: filteredFood[0].name,
+            image: filteredFood[0].image,
+            imageExists: !!filteredFood[0].image
+        });
+    }
   return (
     <div className='food-display' id='food-display'>
       <div className="food-display-head">
