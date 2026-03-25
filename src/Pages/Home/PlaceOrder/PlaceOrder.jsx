@@ -65,11 +65,28 @@ const PlaceOrder = () => {
         { headers: { token } },
       );
 
-      if (response.data.success && response.data.session_url) {
-        window.location.replace(response.data.session_url);
+      if (!response?.data) {
+        console.error("Order response missing data", response);
+        alert("Order gagal, silakan coba lagi.");
+        return;
       }
+
+      if (!response.data.success) {
+        console.error("Order API error", response.data);
+        alert(response.data.message || "Order gagal, silakan coba lagi.");
+        return;
+      }
+
+      if (!response.data.session_url) {
+        console.error("Stripe session_url tidak ada", response.data);
+        alert("Tidak dapat membuat sesi pembayaran. Coba lagi nanti.");
+        return;
+      }
+
+      window.location.replace(response.data.session_url);
     } catch (error) {
-      console.log(error);
+      console.error("PlaceOrder exception", error);
+      alert("Terjadi kesalahan saat membuat pesanan. Coba lagi.");
     }
   };
 
