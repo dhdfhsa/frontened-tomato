@@ -36,20 +36,16 @@ const Cart = () => {
         </div>
         <br />
         <hr />
-        {food_list.map((item) => {
-          if (cartItem[item._id] > 0) {
-            return (
-              <div className="cart-items-title cart-items-item" key={item._id}>
-                <img src={`${url}/images/${item.image}`} alt="" />
-                <p>{item.name}</p>
-                <p>${item.price}</p>
-                <p>{cartItem[item._id]}</p>
-                <p>${item.price * cartItem[item._id]}</p>
-                <p onClick={()=>removeFromCart(item._id)}>x</p>
-              </div>
-            );
-          }
-        })}
+        {(food_list || []).filter((item) => item && cartItem?.[item._id] > 0).map((item) => (
+          <div className="cart-items-title cart-items-item" key={item._id}>
+            <img src={`${url}/images/${item.image}`} alt={item.name || "food"} />
+            <p>{item.name}</p>
+            <p>${item.price}</p>
+            <p>{cartItem[item._id]}</p>
+            <p>${item.price * cartItem[item._id]}</p>
+            <p onClick={() => removeFromCart(item._id)}>x</p>
+          </div>
+        ))}
       </div>
       <div className="cart-bottom">
         <div className="cart-total">

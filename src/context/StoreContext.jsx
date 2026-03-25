@@ -11,25 +11,34 @@ const StoreContextProvider = (props) => {
   const [token,setToken]  = useState("")
 
   const loadCartData = async (authToken) => {
-    const response = await axios.post(
-      url + "/api/cart/get",
-      {},
-      { headers: { token: authToken } }
-    );
+    try {
+      const response = await axios.post(
+        url + "/api/cart/get",
+        {},
+        { headers: { token: authToken } }
+      );
 
-    if (response.data.success) {
-      setCartItem(response.data.cartData || {});
+      if (response.data?.success) {
+        setCartItem(response.data.cartData || {});
+      }
+    } catch (error) {
+      console.error("Failed to load cart data:", error);
+      setCartItem({});
     }
   };
 
   const addToCart = async (itemId) => {
-    if (!cartItem[itemId]) {
-      setCartItem((prev) => ({ ...prev, [itemId]: 1 }));
-    } else {
-      setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    }
+    setCartItem((prev) => ({ ...prev, [itemId]: (prev[itemId] || 0) + 1 }));
+
     if (token) {
-      await axios.post(url+"/api/cart/add",{itemId},{headers:{token}})
+      try {
+        const response = await axios.post(url + "/api/cart/add", { itemId }, { headers: { token } });
+        if (response.data?.cartData) {
+          setCartItem(response.data.cartData);
+        }
+      } catch (error) {
+        console.error("Error adding item to cart:", error);
+      }
     }
   };
 
@@ -44,7 +53,14 @@ const StoreContextProvider = (props) => {
     });
 
     if (token) {
-      await axios.post(url + "/api/cart/remove", { itemId }, { headers: { token } });
+      try {
+        const response = await axios.post(url + "/api/cart/remove", { itemId }, { headers: { token } });
+        if (response.data?.cartData) {
+          setCartItem(response.data.cartData);
+        }
+      } catch (error) {
+        console.error("Error removing item from cart:", error);
+      }
     }
   };
 

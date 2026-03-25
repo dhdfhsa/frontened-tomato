@@ -25,8 +25,8 @@ const PlaceOrder = () => {
 
   const orderItems = useMemo(
     () =>
-      food_list
-        .filter((item) => cartItem[item._id] > 0)
+      (food_list || [])
+        .filter((item) => item && cartItem?.[item._id] > 0)
         .map((item) => ({
           _id: item._id,
           name: item.name,
