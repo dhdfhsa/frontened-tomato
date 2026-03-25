@@ -7,11 +7,27 @@ const FoodItem = ({id,name,image,price,description,category}) => {
 
     const {cartItem,addToCart,removeFromCart,url} = useContext(StoreContext)
     const itemCount = cartItem[id] || 0
+const placeholder = "https://via.placeholder.com/280x200?text=No+Image";
+
+const getImageSrc = (image) => {
+  if (!image) return placeholder;
+  if (typeof image === "string" && image.startsWith("http")) return image;
+  return `${url}/images/${image}`;
+};
 
   return (
     <div className='food-item'>
       <div className="food-item-img-container">
-        <img src={image.startsWith('http') ? image : `${url}/images/${image}`} className='food-item-img' alt={name} />
+        {/* <img src={image.startsWith('http') ? image : `${url}/images/${image}`} className='food-item-img' alt={name} /> */}
+        <img
+  src={getImageSrc(image)}
+  className="food-item-img"
+  alt={name}
+  onError={(e) => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = placeholder;
+  }}
+/>
         {
             !itemCount
             ?<img className='add' onClick={()=>addToCart(id)} src={assets.add_icon_white}/>
